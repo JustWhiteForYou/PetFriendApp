@@ -15,23 +15,29 @@ class LoginScreen extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Text(
-                "PetLog",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(255,120,63,1),
-                  fontSize: 36
-                ),
-                textAlign: TextAlign.left,
-              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:const [
+                  Icon(Icons.pets,color: Color.fromRGBO(255, 120, 63, 1),size: 120,),
+                  SizedBox(width: 10),
+                  Text(
+                    'PetLog',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color:Colors.black,
+                        fontSize: 50),
+                  textAlign: TextAlign.left
+                  ),
+                ],
+              )
             ),
 
             SizedBox(height: size.height * 0.03),
 
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: const TextField(
                 decoration: InputDecoration(
                   labelText: "Username"
                 ),
@@ -43,7 +49,7 @@ class LoginScreen extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 40),
-              child: TextField(
+              child: const TextField(
                 decoration: InputDecoration(
                   labelText: "Password"
                 ),
