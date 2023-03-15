@@ -3,6 +3,7 @@ import 'package:newproject/Screens/register/register.dart';
 import 'package:newproject/components/background.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const String id = 'loginscreen';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

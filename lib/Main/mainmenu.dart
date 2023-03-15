@@ -11,6 +11,7 @@ class PetModel {
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
+  static const String id = 'mainmenu';
 
   @override
   State<MainMenu> createState() => _MainMenuState();
