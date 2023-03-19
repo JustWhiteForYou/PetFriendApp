@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-void main() => runApp(MyApp());
+void Navigate() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
 
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: pages[index],
         bottomNavigationBar: NavigationBar(
-          height: 60,
+          elevation: 10,
           selectedIndex: index,
           onDestinationSelected: (index) => setState(() => this.index = index),
           destinations: const [
