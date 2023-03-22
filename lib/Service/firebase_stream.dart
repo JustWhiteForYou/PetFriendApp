@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/Main/mainmenu.dart';
 import 'package:newproject/Screens/VerifyEmail/verify_email.dart';
-import 'package:newproject/home_screen.dart';
+import 'package:newproject/Screens/login/login.dart';
 
 class FirebaseStream extends StatelessWidget {
   const FirebaseStream({super.key});
@@ -14,14 +13,14 @@ class FirebaseStream extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Scaffold(
-              body: Center(child: Text('Что-то пошло не так!')));
+              body: Center(child: Text('Oh Error!!!')));
         } else if (snapshot.hasData) {
           if (!snapshot.data!.emailVerified) {
-            return const VerifyEmailScreen();
+            return  VerifyEmailScreen();
           }
-          return const HomeScreen();
+          return LoginScreen();
         } else {
-          return const HomeScreen();
+          return LoginScreen();
         }
       },
     );
