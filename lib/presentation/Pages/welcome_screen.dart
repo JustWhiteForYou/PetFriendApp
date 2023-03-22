@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/navbar.dart';
+import 'package:newproject/presentation/Navigation/navbar.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const String id = 'welcome_screen';

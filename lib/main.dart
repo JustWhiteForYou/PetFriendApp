@@ -1,13 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/Main/mainmenu.dart';
-import 'package:newproject/Pages/welcome_screen.dart';
-import 'Screens/login/login.dart';
-import 'Screens/register/register.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:newproject/Service/firebase_stream.dart';
-import 'package:newproject/Screens/VerifyEmail/verify_email.dart';
+import 'package:newproject/domain/pet_edit.dart';
+import 'package:newproject/data/fire_service/firebase_stream.dart';
+import 'data/auth/login.dart';
+import 'data/auth/register.dart';
+import 'package:newproject/data/auth/verify_email.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const FirebaseStream(),
-        '/home': (context) => const MainMenu(),
+        '/main': (context) => const MainMenu(),
         '/login': (context) =>  LoginScreen(),
         '/signup': (context) =>  RegisterScreen(),
         '/verify_email': (context) => const VerifyEmailScreen(),

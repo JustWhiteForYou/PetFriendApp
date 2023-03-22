@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/Main/mainmenu.dart';
+import 'package:newproject/domain/pet_edit.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
@@ -67,11 +67,11 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? const MainMenu()
-      : Scaffold(
+      ? const MainMenu() :
+  Scaffold(
     resizeToAvoidBottomInset: false,
     appBar: AppBar(
-      title: const Text('Верификация Email адреса'),
+      title: const Text('Email address verification'),
     ),
     body: SafeArea(
       child: Padding(
@@ -80,7 +80,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Письмо с подтверждением было отправлено на вашу электронную почту.',
+              'A confirmation letter was sent to your email.',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -89,7 +89,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             ElevatedButton.icon(
               onPressed: canResendEmail ? sendVerificationEmail : null,
               icon: const Icon(Icons.email),
-              label: const Text('Повторно отправить'),
+              label: const Text('Resend'),
             ),
             const SizedBox(height: 20),
             TextButton(

@@ -1,6 +1,6 @@
 # newproject
 
-A new Flutter project.
+My tutorial project to learn Basic Flutter :)
 
 ## Getting Started
 
