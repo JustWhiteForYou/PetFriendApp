@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PetModel {
@@ -31,6 +32,8 @@ class _AddPetDialogState extends State<AddPetDialog> {
   final _breedController = TextEditingController();
   final _imageController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +102,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
   final _breedController = TextEditingController();
   final _imageController = TextEditingController();
   final _descriptionController = TextEditingController();
+
 
   @override
   void initState() {
@@ -201,10 +205,24 @@ class _MainMenuState extends State<MainMenu> {
     });
   }
 
+  Future<void> signOut() async {
+    final navigator = Navigator.of(context);
+
+    await FirebaseAuth.instance.signOut();
+
+    navigator.pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: signOut,
+          child: Icon(
+            Icons.exit_to_app,color: Colors.black,
+          ),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [

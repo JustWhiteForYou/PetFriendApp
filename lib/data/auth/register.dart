@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/Screens/login/login.dart';
-import 'package:newproject/Service/snack_bar.dart';
+import 'package:newproject/data/auth/login.dart';
+import 'package:newproject/presentation/notifications/snack_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'registerscreen';

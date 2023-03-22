@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
+class Navigate extends StatefulWidget {
 
-void Navigate() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-
-  const MyApp({Key? key}) : super(key: key);
+  const Navigate({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Navigate> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<Navigate> {
   int index = 0;
   final pages = [
     Center(child: Text('Page 1',style: TextStyle(fontSize: 50),),),

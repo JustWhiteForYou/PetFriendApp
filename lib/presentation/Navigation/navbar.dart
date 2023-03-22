@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/Main/mainmenu.dart';
-import 'package:newproject/Pages/welcome_screen.dart';
-import 'Screens/login/login.dart';
+import 'package:newproject/data/auth/login.dart';
+import 'package:newproject/domain/pet_edit.dart';
+import 'package:newproject/presentation/Pages/welcome_screen.dart';
 
 class Navbar extends StatelessWidget {
   @override

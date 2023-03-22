@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/Main/mainmenu.dart';
-import 'package:newproject/Screens/register/register.dart';
+import 'package:newproject/data/auth/register.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:newproject/Service/snack_bar.dart';
+import 'package:newproject/presentation/notifications/snack_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'loginscreen';
