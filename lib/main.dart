@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:newproject/data/auth/pages/register.dart';
+import 'package:newproject/data/auth/pages/verify_email.dart';
 import 'package:newproject/domain/pet_edit.dart';
 import 'package:newproject/data/fire_service/firebase_stream.dart';
-import 'data/auth/login.dart';
-import 'data/auth/register.dart';
-import 'package:newproject/data/auth/verify_email.dart';
+import 'data/auth/pages/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,12 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/data/auth/login.dart';
-import 'package:newproject/presentation/notifications/snack_bar.dart';
+import 'package:newproject/constants.dart';
+import 'package:newproject/data/auth/pages/login.dart';
+import 'package:newproject/data/auth/logic/signup_logic.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'registerscreen';
-  const RegisterScreen({super.key});
+   RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -15,11 +16,16 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
+
+
   bool isHiddenPassword = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordRepeatController =TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+
+
 
   @override
   void dispose(){
@@ -34,37 +40,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  Future<void> signUp() async {
-    final navigator = Navigator.of(context);
+  void onSignUpPressed(BuildContext context) async {
+    await SignUpLogic.signUp(context, emailController, passwordController);
+  }
 
 
-
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.code);
-
-      if (e.code == 'email-already-in-use') {
-        SnackBarService.showSnackBar(
-          context,
-          'This Email is already in use, try again with another Email',
-          true,
-        );
-        return;
-      } else {
-        SnackBarService.showSnackBar(
-          context,
-          'Unknown error! Try again or contact support.',
-          true,
-        );
-      }
-    }
-
-    navigator.pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-  } /// SignInLogic
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +57,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: MyMargin,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:const [
-                    Icon(Icons.pets,color: Color.fromRGBO(255, 120, 63, 1),size: 120,),
-                    SizedBox(width: 10),
+                    Icon(Icons.pets,color: ColorApp,size: 120,),
+                    MySizedBox,
                     Text('PetLog',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -93,11 +73,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 )
             ),/// MainAppLog
-            SizedBox(height: size.height * 0.03),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: MyMargin,
               child:  TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -106,16 +86,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ? 'Wrong type of email'
                     :null,
                 decoration: const InputDecoration(
-                    labelText: "email"
+                    labelText: "email",
                 ),
               ),
             ),/// EmailTextField
 
-            SizedBox(height: size.height * 0.03),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: MyMargin,
               child:  TextFormField(
                 controller: passwordController,
                 obscureText: isHiddenPassword,
@@ -133,16 +113,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    labelText:("password")
+                    labelText:("password"),
                 ),
               ),
             ),/// PasswordTextField
 
-            SizedBox(height: size.height * 0.03),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: MyMargin,
               child:  TextFormField(
                 controller: passwordRepeatController,
                 obscureText: isHiddenPassword,
@@ -160,20 +140,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    labelText:("Confirm password")
+                    labelText:("Confirm password"),
                 ),
               ),
             ),/// ConfirmPasswordTextField
 
-            SizedBox(height: size.height * 0.05),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                onPressed: signUp,
+                onPressed: () => onSignUpPressed,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(61, 224, 146, 1),
+                    backgroundColor: MainColorOfButtons,
                     padding: const EdgeInsets.all(0)
                 ),
                 child: Container(

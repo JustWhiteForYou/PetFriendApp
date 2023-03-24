@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:newproject/data/auth/register.dart';
+import 'package:newproject/constants.dart';
+import 'package:newproject/data/auth/logic/login_logic.dart';
+import 'package:newproject/data/auth/pages/register.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:newproject/presentation/notifications/snack_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'loginscreen';
@@ -34,37 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  Future<void> login() async {
-    final navigator = Navigator.of(context);
-
-
-
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (error) {
-      print(error.code);
-
-      if (error.code == 'user-not-found' || error.code == 'wrong-password') {
-        SnackBarService.showSnackBar(
-          context,
-          'Wrong email or password. Try again',
-          true,
-        );
-        return;
-      } else {
-        SnackBarService.showSnackBar(
-          context,
-          'Unknown error! Try again or contact support.',
-          true,
-        );
-        return;
-      }
-    }
-    navigator.pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
-  } /// LoginLogic
+  void onLogInPressed(BuildContext context) async {
+    await LogInLogic.logIn(context, emailController, passwordController);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: MyMargin,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:const [
-                  Icon(Icons.pets,color: Color.fromRGBO(255, 120, 63, 1),size: 120,),
+                  Icon(Icons.pets,color: ColorApp,size: 120,),
                   SizedBox(width: 10),
                   Text(
                     'PetLog',
@@ -95,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
               )
             ),/// MainAppLog
 
-            SizedBox(height: size.height * 0.03),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: MyMargin,
               child:  TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -113,11 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),/// EmailTextField
 
-            SizedBox(height: size.height * 0.03),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: MyMargin,
               child:  TextFormField(
                 controller: passwordController,
                 obscureText: isHiddenPassword,
@@ -140,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),/// PasswordTextField
 
-            SizedBox(height: size.height * 0.05),
+            MySizedBox,
 
             Container(
               alignment: Alignment.center,
@@ -148,12 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child:Column(
                 children: <Widget> [
                   ElevatedButton(
-                    onPressed: () {
-                      login();
-                      },
+                    onPressed: () => LogInLogic.logIn(
+                        context, emailController, passwordController),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(61, 224, 146, 1),
-                      padding: const EdgeInsets.all(0),
+                      backgroundColor: MainColorOfButtons,
                     ),
                     child: Container(
                       alignment: Alignment.center,
@@ -168,11 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                   MySizedBox,
 
                   const Text('Or'),
 
-                  const SizedBox(height: 10,),
+                   MySizedBox,
 
                   SignInButton(
                       Buttons.Google,
@@ -184,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: MyMargin,
               child: GestureDetector(
                 onTap: () => {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()))
@@ -195,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
-                    color: Color.fromRGBO(60,227,148,1)
+                    color: MainColorOfButtons
                   ),
                 ),
               ),
