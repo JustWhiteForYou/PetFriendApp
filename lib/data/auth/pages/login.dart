@@ -5,6 +5,7 @@ import 'package:newproject/data/auth/pages/register.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'loginscreen';
@@ -35,13 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void onLogInPressed(BuildContext context) async {
-    await LogInLogic.logIn(context, emailController, passwordController);
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var logIn = Provider.of<LogInLogic>(context,listen: false).logIn(
+        context, emailController, passwordController);
+
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -50,11 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Container(
               alignment: Alignment.center,
-              padding: MyMargin,
+              padding: myEdgeIns,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:const [
-                  Icon(Icons.pets,color: ColorApp,size: 120,),
+                  Icon(Icons.pets,color: colorApp,size: 120,),
                   SizedBox(width: 10),
                   Text(
                     'PetLog',
@@ -68,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
               )
             ),/// MainAppLog
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child:  TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -86,11 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),/// EmailTextField
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child:  TextFormField(
                 controller: passwordController,
                 obscureText: isHiddenPassword,
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),/// PasswordTextField
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
@@ -121,10 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child:Column(
                 children: <Widget> [
                   ElevatedButton(
-                    onPressed: () => LogInLogic.logIn(
-                        context, emailController, passwordController),
+                    onPressed: () => logIn,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: MainColorOfButtons,
+                      backgroundColor: mainColorOfButtons,
                     ),
                     child: Container(
                       alignment: Alignment.center,
@@ -139,11 +138,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                   MySizedBox,
+                  mySizedBox,
 
                   const Text('Or'),
 
-                   MySizedBox,
+                  mySizedBox,
 
                   SignInButton(
                       Buttons.Google,
@@ -155,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child: GestureDetector(
                 onTap: () => {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()))
@@ -166,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
-                    color: MainColorOfButtons
+                    color: mainColorOfButtons
                   ),
                 ),
               ),

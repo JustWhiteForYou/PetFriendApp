@@ -15,7 +15,7 @@ enum AuthErrorCode {
 }
 
 extension AuthErrorCodeExtension on AuthErrorCode {
-  String get message {
+  String get name {
     switch (this) {
       case AuthErrorCode.emailAlreadyInUse:
         return 'This Email is already in use, try again with another Email';
@@ -28,8 +28,8 @@ extension AuthErrorCodeExtension on AuthErrorCode {
     }
   }
 
-  static AuthErrorCode fromFirebaseException(FirebaseAuthException exception) {
-    switch (exception.code) {
+  static AuthErrorCode fromFirebaseException(FirebaseAuthException firebaseException) {
+    switch (firebaseException.code) {
       case 'email-already-in-use':
         return AuthErrorCode.emailAlreadyInUse;
       case 'user-not-found':
@@ -41,11 +41,11 @@ extension AuthErrorCodeExtension on AuthErrorCode {
   }
 }
 
-class LogInLogic {
-  static Future<void> logIn(
-      BuildContext context,
-      TextEditingController emailController,
-      TextEditingController passwordController)
+class LogInLogic extends ChangeNotifier {
+   Future<void> logIn(
+      final BuildContext context,
+      final TextEditingController emailController,
+      final TextEditingController passwordController)
 
   async {
     final navigator = Navigator.of(context);
@@ -63,13 +63,13 @@ class LogInLogic {
           errorCode == AuthErrorCode.emailAlreadyInUse) {
         SnackBarService.showSnackBar(
           context: context,
-          message: errorCode.message,
+          message: errorCode.name,
           error: true,
         );
       } else {
         SnackBarService.showSnackBar(
           context: context,
-          message: AuthErrorCode.unknown.message,
+          message: AuthErrorCode.unknown.name,
           error: true,
         );
       }

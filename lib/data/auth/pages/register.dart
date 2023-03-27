@@ -2,8 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newproject/constants.dart';
-import 'package:newproject/data/auth/pages/login.dart';
 import 'package:newproject/data/auth/logic/signup_logic.dart';
+import 'package:newproject/data/auth/pages/login.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'registerscreen';
@@ -16,16 +17,11 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-
-
   bool isHiddenPassword = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordRepeatController =TextEditingController();
   final formKey = GlobalKey<FormState>();
-
-
-
 
   @override
   void dispose(){
@@ -40,15 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  void onSignUpPressed(BuildContext context) async {
-    await SignUpLogic.signUp(context, emailController, passwordController);
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var signUp = Provider.of<SignUpLogic>(context,listen:false).signUp(
+        context, emailController, passwordController);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -57,12 +49,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
-                padding: MyMargin,
+                padding: myEdgeIns,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:const [
-                    Icon(Icons.pets,color: ColorApp,size: 120,),
-                    MySizedBox,
+                    Icon(Icons.pets,color: colorApp,size: 120,),
+                    mySizedBox,
                     Text('PetLog',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -73,11 +65,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 )
             ),/// MainAppLog
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child:  TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -91,11 +83,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),/// EmailTextField
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child:  TextFormField(
                 controller: passwordController,
                 obscureText: isHiddenPassword,
@@ -118,11 +110,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),/// PasswordTextField
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: MyMargin,
+              margin: myEdgeIns,
               child:  TextFormField(
                 controller: passwordRepeatController,
                 obscureText: isHiddenPassword,
@@ -145,15 +137,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),/// ConfirmPasswordTextField
 
-            MySizedBox,
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                onPressed: () => onSignUpPressed,
+                onPressed: () => signUp,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: MainColorOfButtons,
+                    backgroundColor: mainColorOfButtons,
                     padding: const EdgeInsets.all(0)
                 ),
                 child: Container(
@@ -194,3 +186,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
   }
 }
+

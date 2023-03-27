@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:newproject/data/auth/logic/login_logic.dart';
 import 'package:newproject/presentation/notifications/snack_bar.dart';
 
-class SignUpLogic {
+class SignUpLogic extends ChangeNotifier{
 
-  static Future<void> signUp(
-      BuildContext context,
-      TextEditingController emailController,
-      TextEditingController passwordController)
+   Future<void> signUp(
+      final BuildContext context,
+      final TextEditingController emailController,
+      final TextEditingController passwordController)
 
   async {
     final navigator = Navigator.of(context);
@@ -26,14 +26,14 @@ class SignUpLogic {
           error.code == AuthErrorCode.wrongCredentials) {
         SnackBarService.showSnackBar(
           context:context,
-          message: errorCode.message,
+          message: errorCode.name,
           error: true,
         );
         return;
       } else {
         SnackBarService.showSnackBar(
           context:context,
-          message:AuthErrorCode.unknown.message,
+          message:AuthErrorCode.unknown.name,
           error: true,
         );
       }
