@@ -2,13 +2,12 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newproject/constants.dart';
-import 'package:newproject/data/auth/logic/signup_logic.dart';
-import 'package:newproject/data/auth/pages/login.dart';
+import 'package:newproject/data/auth/logic/login_logic.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'registerscreen';
-   RegisterScreen({super.key});
+   const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -21,13 +20,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordRepeatController =TextEditingController();
-  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose(){
     emailController.dispose();
     passwordController.dispose();
     passwordRepeatController.dispose();
+    super.dispose();
   }
 
   void togglePasswordView() {
@@ -39,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var signUp = Provider.of<SignUpLogic>(context,listen:false).signUp(
+    var signUp = Provider.of<AuthNotifier>(context,listen:false).signUp(
         context, emailController, passwordController);
 
     return Scaffold(
@@ -168,9 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
-                },
+                onTap: () => {Navigator.pushReplacementNamed(context, '/login')},
                 child: const Text(
                   "Already Have an Account? Sign in",
                   style: TextStyle(

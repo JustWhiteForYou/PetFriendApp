@@ -219,7 +219,7 @@ class _MainMenuState extends State<MainMenu> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: signOut,
-          child: Icon(
+          child: const Icon(
             Icons.exit_to_app,color: Colors.black,
           ),
         ),

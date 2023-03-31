@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newproject/constants.dart';
 import 'package:newproject/data/auth/logic/login_logic.dart';
-import 'package:newproject/data/auth/pages/register.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -9,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'loginscreen';
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -27,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose(){
     emailController.dispose();
     passwordController.dispose();
-
     super.dispose();
   }
   void togglePasswordView() {
@@ -39,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var logIn = Provider.of<LogInLogic>(context,listen: false).logIn(
+    var logIn = Provider.of<AuthNotifier>(context,listen: false).logIn(
         context, emailController, passwordController);
 
 
@@ -156,8 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.center,
               margin: myEdgeIns,
               child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterScreen()))
+                onTap: () => {Navigator.pushReplacementNamed(context, '/signup')
                 },
                 child: const Text(
                   "Sign up",

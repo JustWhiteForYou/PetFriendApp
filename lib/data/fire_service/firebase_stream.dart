@@ -16,11 +16,11 @@ class FirebaseStream extends StatelessWidget {
               body: Center(child: Text('Oh Error!!!')));
         } else if (snapshot.hasData) {
           if (!snapshot.data!.emailVerified) {
-            return  VerifyEmailScreen();
+            return  const VerifyEmailScreen();
           }
-          return LoginScreen();
+          return const LoginScreen();
         } else {
-          return LoginScreen();
+          return const LoginScreen();
         }
       },
     );
