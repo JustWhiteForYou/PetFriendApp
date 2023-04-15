@@ -1,6 +1,7 @@
 # newproject
 
 My tutorial project to learn Basic Flutter :)
+Just on the layout to understand the basics of Flutter 
 
 ## Getting Started
 
