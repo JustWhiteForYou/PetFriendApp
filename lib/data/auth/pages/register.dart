@@ -1,12 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/data/auth/login.dart';
-import 'package:newproject/presentation/notifications/snack_bar.dart';
+import 'package:newproject/constants.dart';
+import 'package:newproject/data/auth/logic/login_logic.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'registerscreen';
-  const RegisterScreen({super.key});
+   const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -19,13 +20,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordRepeatController =TextEditingController();
-  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose(){
     emailController.dispose();
     passwordController.dispose();
     passwordRepeatController.dispose();
+    super.dispose();
   }
 
   void togglePasswordView() {
@@ -34,41 +35,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  Future<void> signUp() async {
-    final navigator = Navigator.of(context);
-
-
-
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.code);
-
-      if (e.code == 'email-already-in-use') {
-        SnackBarService.showSnackBar(
-          context,
-          'This Email is already in use, try again with another Email',
-          true,
-        );
-        return;
-      } else {
-        SnackBarService.showSnackBar(
-          context,
-          'Unknown error! Try again or contact support.',
-          true,
-        );
-      }
-    }
-
-    navigator.pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-  } /// SignInLogic
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var signUp = Provider.of<AuthNotifier>(context,listen:false).signUp(
+        context, emailController, passwordController);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -77,12 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: <Widget>[
             Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: myEdgeIns,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:const [
-                    Icon(Icons.pets,color: Color.fromRGBO(255, 120, 63, 1),size: 120,),
-                    SizedBox(width: 10),
+                    Icon(Icons.pets,color: colorApp,size: 120,),
+                    mySizedBox,
                     Text('PetLog',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -93,11 +64,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 )
             ),/// MainAppLog
-            SizedBox(height: size.height * 0.03),
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: myEdgeIns,
               child:  TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -106,16 +77,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ? 'Wrong type of email'
                     :null,
                 decoration: const InputDecoration(
-                    labelText: "email"
+                    labelText: "email",
                 ),
               ),
             ),/// EmailTextField
 
-            SizedBox(height: size.height * 0.03),
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: myEdgeIns,
               child:  TextFormField(
                 controller: passwordController,
                 obscureText: isHiddenPassword,
@@ -133,16 +104,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    labelText:("password")
+                    labelText:("password"),
                 ),
               ),
             ),/// PasswordTextField
 
-            SizedBox(height: size.height * 0.03),
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 40),
+              margin: myEdgeIns,
               child:  TextFormField(
                 controller: passwordRepeatController,
                 obscureText: isHiddenPassword,
@@ -160,20 +131,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    labelText:("Confirm password")
+                    labelText:("Confirm password"),
                 ),
               ),
             ),/// ConfirmPasswordTextField
 
-            SizedBox(height: size.height * 0.05),
+            mySizedBox,
 
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
-                onPressed: signUp,
+                onPressed: () => signUp,
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(61, 224, 146, 1),
+                    backgroundColor: mainColorOfButtons,
                     padding: const EdgeInsets.all(0)
                 ),
                 child: Container(
@@ -196,9 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
-                },
+                onTap: () => {Navigator.pushReplacementNamed(context, '/login')},
                 child: const Text(
                   "Already Have an Account? Sign in",
                   style: TextStyle(
@@ -214,3 +183,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
   }
 }
+

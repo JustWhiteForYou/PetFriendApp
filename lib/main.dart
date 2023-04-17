@@ -1,15 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:newproject/domain/pet_edit.dart';
-import 'package:newproject/data/fire_service/firebase_stream.dart';
-import 'data/auth/login.dart';
-import 'data/auth/register.dart';
-import 'package:newproject/data/auth/verify_email.dart';
+import 'package:newproject/data/auth/logic/login_logic.dart';
+import 'package:newproject/presentation/navigation/routes.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp( MyApp());
+  runApp( MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context)=> AuthNotifier()),
+      ],
+  child: const MyApp()
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,16 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return   MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => const FirebaseStream(),
-        '/main': (context) => const MainMenu(),
-        '/login': (context) =>  LoginScreen(),
-        '/signup': (context) =>  RegisterScreen(),
-        '/verify_email': (context) => const VerifyEmailScreen(),
-      },
       initialRoute: '/',
-    );
+      routes: routes,
+      );
   }
 }
