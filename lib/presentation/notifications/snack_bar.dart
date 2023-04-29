@@ -4,8 +4,12 @@ class SnackBarService {
   static const errorColor = Colors.red;
   static const okColor = Colors.green;
 
-  static Future<void> showSnackBar(
-      BuildContext context, String message, bool error) async {
+  static Future<void> showSnackBar({
+    required BuildContext context,
+    required String message,
+    required bool error,
+  })
+  async {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
     final snackBar = SnackBar(
@@ -16,3 +20,5 @@ class SnackBarService {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
+
+
