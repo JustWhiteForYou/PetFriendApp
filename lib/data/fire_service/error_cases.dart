@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 extension FirebaseAuthExceptionExtensions on FirebaseAuthException {
   bool isWrongCredentials() {
-    return this.code == 'user-not-found' || this.code == 'wrong-password';
+    return code == 'user-not-found' || code == 'wrong-password';
   }
 }
 
